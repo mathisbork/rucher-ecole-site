@@ -129,38 +129,51 @@ iframe.pdf-viewer, video { width: 100%; height: 60vh; border: none; display: blo
 .lecture-title { margin-top: 0; color: var(--accent); font-size: 1.4rem; }
 .lecture-meta { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; }
 
-/* ORDINATEUR (ECRANS LARGES) */
+/* --- CONFIGURATION ORDI (Écrans > 1024px) --- */
 @media (min-width: 1024px) {
-    body.lecture-page { overflow: hidden; } /* Fige la page */
+    
+    body.lecture-page {
+        overflow: hidden !important; 
+    }
 
     .container-lecture {
-        height: calc(100vh - 65px); /* Toute la hauteur disponible */
-        margin: 0; padding: 0 !important;
-        flex-direction: row; /* Cote a cote */
-        gap: 0;
-        align-items: stretch; /* On tire sur les éléments */
+        height: calc(100vh - 65px) !important; 
+        margin: 0 !important;
+        padding: 0 !important;
+        display: flex !important; 
+        flex-direction: row !important;
+        align-items: stretch !important; /* Force la hauteur max */
     }
 
     .player-wrapper {
-        flex: 7;
-        background: #000; border-radius: 0;
-        /* LE CORRECTIF CRITIQUE EST ICI : */
-        display: flex;          /* Mode Flex */
-        flex-direction: column; /* Vertical */
-        height: 100%;           /* Force la hauteur */
-        /* On retire 'align-items: center' qui faisait le bug */
+        flex: 7 !important;
+        background: #000 !important;
+        border-radius: 0 !important;
+        
+        /* ICI C'EST LE CORRECTIF CRITIQUE */
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100% !important;
+        
+        /* ON ÉCRASE L'ANCIEN CODE DE MERDE */
+        align-items: stretch !important; 
+        justify-content: flex-start !important; 
     }
 
     iframe.pdf-viewer, video {
-        flex: 1;      /* Le PDF grandit pour tout remplir */
-        width: 100%;
-        height: 100%;
-        border: none;
-        object-fit: contain;
+        flex: 1 !important; /* PREND TOUTE LA PLACE RESTANTE */
+        width: 100% !important;
+        height: 100% !important;
+        border: none !important;
+        display: block !important;
     }
 
     .lecture-info {
-        flex: 3; height: 100%; border-radius: 0; border: none; border-left: 1px solid var(--border);
-        overflow-y: auto; padding: 30px; min-width: 350px;
+        flex: 3 !important;
+        height: 100% !important;
+        border-left: 1px solid var(--border) !important;
+        overflow-y: auto !important;
+        padding: 30px !important;
+        min-width: 350px !important;
     }
 }
