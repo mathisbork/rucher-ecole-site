@@ -43,7 +43,7 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
                 <div class="card-body">
                     <h3>Promotions</h3>
                     <p class="card-desc">Créer les promos (ex: 2025) et ouvrir l'accès aux cours.</p>
-                    <a href="#" class="btn-main" style="opacity:0.5">Bientôt disponible</a>
+                    <a href="admin_promos.php" class="btn-main" style="opacity:0.5">Gérer les promos</a>
                 </div>
             </div>
 
