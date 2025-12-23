@@ -74,7 +74,7 @@ if (isset($_GET['detach_c']) && isset($_GET['detach_p'])) {
 // --- 4. RÉCUPÉRATION DES DONNÉES ---
 
 // Liste des cours pour le menu déroulant
-$courses_list = $pdo->query("SELECT id, titre FROM cours ORDER BY created_at DESC")->fetchAll();
+$courses_list = $pdo->query("SELECT id, titre FROM cours ORDER BY date_creation DESC")->fetchAll();
 
 // Liste des promos pour le menu déroulant
 $promos_list = $pdo->query("SELECT id, nom FROM promotions ORDER BY annee DESC")->fetchAll();
