@@ -5,19 +5,21 @@
     --card-bg: #1e1e1e;
     --text: #e0e0e0;
     --text-muted: #bbbbbb;
-    --primary: #81ecec; /* Cyan clair pour ressortir sur le noir */
-    --accent: #e67e22;  /* Orange Miel */
+    --primary: #81ecec;
+    --accent: #e67e22;
     --border: #333333;
     --shadow: 0 4px 6px rgba(0,0,0,0.4);
+    --danger: #e74c3c;
+    --success: #27ae60;
 }
 
-/* --- CLASSE LIGHT-MODE (Pour ceux qui veulent du blanc) --- */
+/* --- LIGHT-MODE --- */
 body.light-mode {
     --bg: #f4f6f9;
     --card-bg: #ffffff;
     --text: #333333;
     --text-muted: #666666;
-    --primary: #2c3e50; /* Bleu nuit */
+    --primary: #2c3e50;
     --accent: #d35400;
     --border: #dddddd;
     --shadow: 0 4px 6px rgba(0,0,0,0.05);
@@ -37,11 +39,12 @@ body {
 /* --- Header --- */
 header {
     background: var(--card-bg);
-    padding: 15px 30px;
+    padding: 15px 20px;
     border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap; /* Permet le passage à la ligne sur mobile */
 }
 
 .logo {
@@ -49,6 +52,9 @@ header {
     font-weight: bold;
     text-decoration: none;
     font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .nav-links {
@@ -57,56 +63,37 @@ header {
     gap: 15px;
 }
 
-/* Boutons */
-.btn-toggle-theme {
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    cursor: pointer;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s;
-}
-.btn-toggle-theme:hover { background: rgba(255,255,255,0.1); }
-
-.btn-admin {
-    background-color: var(--primary);
-    color: #121212 !important; /* Texte noir sur fond cyan */
-    padding: 8px 12px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 0.9rem;
-}
-body.light-mode .btn-admin { color: white !important; } /* Texte blanc sur fond bleu nuit */
-
-.btn-logout {
-    color: #e74c3c !important;
-    text-decoration: none;
-    font-size: 1.1rem;
-}
-
 /* --- Layout --- */
 .container {
     max-width: 1200px;
-    margin: 40px auto;
+    margin: 30px auto;
     padding: 0 20px;
     flex: 1;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-h1, h2, h3 { color: var(--text); }
+/* --- Grilles et Flexbox Responsives --- */
+/* Wrapper pour mettre deux formulaires côte à côte */
+.responsive-wrapper {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap; /* CRUCIAL : Passe à la ligne si pas de place */
+    margin-bottom: 40px;
+}
 
-/* --- Cartes --- */
+.responsive-col {
+    flex: 1;
+    min-width: 300px; /* Si l'écran fait moins de 300px dispo, ça passe à la ligne */
+}
+
 .grid-cours, .grid-admin {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
 }
 
+/* --- Cartes --- */
 .card {
     background: var(--card-bg);
     border: 1px solid var(--border);
@@ -115,54 +102,22 @@ h1, h2, h3 { color: var(--text); }
     box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s;
 }
-
-.card:hover { transform: translateY(-5px); }
-
+.card:hover { transform: translateY(-3px); }
 .card-img {
-    height: 160px;
-    background: var(--primary); /* Couleur variable selon le thème */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-    color: var(--bg); /* L'icône prend la couleur du fond de page */
+    height: 140px;
+    background: var(--primary);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem; color: var(--bg);
 }
-
 .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
-.card-title { margin-top: 0; }
-.card-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; flex-grow: 1; }
-
-.badge {
-    display: inline-block; padding: 4px 8px; border-radius: 4px; 
-    font-size: 0.75rem; font-weight: bold; margin-bottom: 10px; width: fit-content;
-}
-.badge.video { background: rgba(230, 126, 34, 0.2); color: var(--accent); border: 1px solid var(--accent); }
-.badge.pdf { background: rgba(46, 204, 113, 0.2); color: #2ecc71; border: 1px solid #2ecc71; }
-
-.btn-main {
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 6px;
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
-    cursor: pointer;
-    width: 100%;
-    display: block;
-    box-sizing: border-box;
-}
-.btn-main:hover { opacity: 0.9; }
+.card-title { margin-top: 0; font-size: 1.1rem; }
+.card-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; flex-grow: 1; }
 
 /* --- Formulaires --- */
 .auth-box {
-    max-width: 400px;
-    margin: 60px auto;
     background: var(--card-bg);
-    padding: 30px;
+    padding: 25px;
     border-radius: 10px;
     border: 1px solid var(--border);
     box-shadow: var(--shadow);
@@ -171,5 +126,42 @@ input, select, textarea {
     width: 100%; padding: 12px; margin-bottom: 15px;
     background: var(--bg); color: var(--text);
     border: 1px solid var(--border); border-radius: 6px;
-    box-sizing: border-box;
+    box-sizing: border-box; /* Empêche le débordement */
+}
+
+/* --- Tableaux Responsives --- */
+.table-responsive {
+    overflow-x: auto; /* Ajoute une barre de défilement horizontale si besoin */
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+.table-admin { width: 100%; border-collapse: collapse; min-width: 600px; } /* Force une largeur min */
+.table-admin th, .table-admin td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); color: var(--text); }
+.table-admin th { background: var(--card-bg); font-weight: bold; white-space: nowrap; }
+
+/* --- Boutons et Badges --- */
+.btn-main {
+    background: var(--accent); color: white; border: none; padding: 12px;
+    border-radius: 6px; text-align: center; text-decoration: none;
+    font-weight: bold; cursor: pointer; width: 100%; display: block; box-sizing: border-box;
+}
+.btn-toggle-theme {
+    background: none; border: 1px solid var(--border); border-radius: 50%;
+    width: 35px; height: 35px; cursor: pointer; color: var(--text);
+    display: flex; align-items: center; justify-content: center;
+}
+.badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; margin-bottom: 10px; width: fit-content; }
+.badge.video { background: rgba(230, 126, 34, 0.2); color: var(--accent); border: 1px solid var(--accent); }
+.badge.pdf { background: rgba(46, 204, 113, 0.2); color: #2ecc71; border: 1px solid #2ecc71; }
+.alert { padding: 10px; border-radius: 6px; margin-bottom: 15px; }
+.alert-error { background: rgba(231, 76, 60, 0.2); color: #e74c3c; border: 1px solid #e74c3c; }
+.alert-success { background: rgba(39, 174, 96, 0.2); color: #27ae60; border: 1px solid #27ae60; }
+
+/* --- MOBILE SPECIFIQUE --- */
+@media (max-width: 768px) {
+    header { flex-direction: column; gap: 15px; text-align: center; }
+    .nav-links { width: 100%; justify-content: center; }
+    .responsive-wrapper { flex-direction: column; }
+    .btn-admin { font-size: 0.8rem; }
+    h1 { font-size: 1.5rem; text-align: center; }
 }

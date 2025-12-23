@@ -2,12 +2,13 @@
 session_start();
 require 'db.php';
 
+// Si pas connecté, direction login
 if (!isset($_SESSION['user_id'])) { header("Location: connexion.php"); exit(); }
 
 $user_id = $_SESSION['user_id'];
 $is_admin = isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1;
 
-// Récupération des cours
+// Récupération des cours accessibles
 $sql = "
     SELECT DISTINCT c.* FROM cours c
     JOIN cours_promotions cp ON c.id = cp.cours_id
@@ -24,6 +25,7 @@ $cours = $stmt->fetchAll();
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes Cours - Rucher École</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -33,29 +35,25 @@ $cours = $stmt->fetchAll();
         <a href="index.php" class="logo"><i class="fas fa-bee"></i> Rucher École</a>
         
         <div class="nav-links">
-            <button id="theme-toggle" class="btn-toggle-theme" title="Changer de thème">
-                <i class="fas fa-sun"></i>
-            </button>
+            <button id="theme-toggle" class="btn-toggle-theme" title="Thème"><i class="fas fa-sun"></i></button>
 
             <?php if ($is_admin): ?>
-                <a href="admin_dashboard.php" class="btn-admin">
-                    <i class="fas fa-cogs"></i> Admin
-                </a>
+                <a href="admin_dashboard.php" class="btn-admin"><i class="fas fa-cogs"></i> Admin</a>
             <?php endif; ?>
 
-            <span style="font-size:0.9rem; margin-left:10px;">Bonjour, <strong><?= htmlspecialchars($_SESSION['prenom']) ?></strong></span>
+            <span style="font-size:0.9rem;">Bonjour, <strong><?= htmlspecialchars($_SESSION['prenom']) ?></strong></span>
             <a href="logout.php" class="btn-logout" title="Déconnexion"><i class="fas fa-sign-out-alt"></i></a>
         </div>
     </header>
 
     <div class="container">
-        <h1>Mes modules de formation</h1>
+        <h1>Mes modules</h1>
         
         <?php if (empty($cours)): ?>
-            <div style="text-align:center; padding:50px; background:var(--card-bg); border-radius:10px; border:1px solid var(--border);">
+            <div class="auth-box" style="text-align:center; padding:40px;">
                 <i class="fas fa-inbox" style="font-size:3rem; color:var(--text-muted); margin-bottom:20px;"></i>
-                <p>Vous n'avez accès à aucun cours pour le moment.</p>
-                <small style="color:var(--text-muted)">Votre inscription à une promotion est peut-être en attente.</small>
+                <p>Aucun cours accessible pour le moment.</p>
+                <small style="color:var(--text-muted)">Votre inscription est peut-être en attente.</small>
             </div>
         <?php else: ?>
             <div class="grid-cours">
@@ -71,8 +69,8 @@ $cours = $stmt->fetchAll();
                         <div class="card-body">
                             <span class="badge <?= $c['type_contenu'] ?>"><?= strtoupper($c['type_contenu']) ?></span>
                             <h3 class="card-title"><?= htmlspecialchars($c['titre']) ?></h3>
-                            <p class="card-desc"><?= substr(htmlspecialchars($c['description']), 0, 100) ?>...</p>
-                            <a href="lecture.php?id=<?= $c['id'] ?>" class="btn-main">Accéder au contenu</a>
+                            <p class="card-desc"><?= substr(htmlspecialchars($c['description']), 0, 90) ?>...</p>
+                            <a href="lecture.php?id=<?= $c['id'] ?>" class="btn-main">Ouvrir</a>
                         </div>
                     </div>
                 <?php endforeach; ?>
