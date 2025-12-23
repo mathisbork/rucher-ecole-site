@@ -1,6 +1,8 @@
-/* style.css - VERSION FINALE */
+/* style.css - VERSION FINALE CORRIGÉE */
 
-/* --- VARIABLES & THÈMES --- */
+/* =========================================
+   1. VARIABLES & THÈMES
+   ========================================= */
 :root {
     /* --- PAR DÉFAUT : THÈME SOMBRE --- */
     --bg: #121212;
@@ -27,7 +29,9 @@ body.light-mode {
     --shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
-/* --- BASES --- */
+/* =========================================
+   2. BASES & LAYOUT GÉNÉRAL
+   ========================================= */
 body {
     background-color: var(--bg);
     color: var(--text);
@@ -47,7 +51,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap; /* Important pour mobile */
+    flex-wrap: wrap; 
     height: 65px; /* Hauteur fixe pour le calcul du Split Screen */
     box-sizing: border-box;
 }
@@ -68,7 +72,7 @@ header {
     gap: 15px;
 }
 
-/* --- CONTAINERS & LAYOUT --- */
+/* --- CONTENEUR STANDARD --- */
 .container {
     max-width: 1200px;
     margin: 30px auto;
@@ -78,14 +82,18 @@ header {
     box-sizing: border-box;
 }
 
-/* --- GRILLES (Cours & Admin) --- */
+/* =========================================
+   3. COMPOSANTS (Cartes, Boutons, Tables)
+   ========================================= */
+
+/* --- GRILLES --- */
 .grid-cours, .grid-admin {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
 }
 
-/* --- FORMULAIRES RESPONSIVES (Admin) --- */
+/* --- FORMULAIRES ADMIN (RESPONSIVE) --- */
 .responsive-wrapper {
     display: flex;
     gap: 20px;
@@ -98,7 +106,7 @@ header {
     min-width: 300px;
 }
 
-/* --- CARTES (Design Cards) --- */
+/* --- CARTES --- */
 .card {
     background: var(--card-bg);
     border: 1px solid var(--border);
@@ -122,7 +130,7 @@ header {
 .card-title { margin-top: 0; font-size: 1.1rem; }
 .card-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; flex-grow: 1; }
 
-/* --- INPUTS & BOITES --- */
+/* --- INPUTS --- */
 .auth-box {
     background: var(--card-bg);
     padding: 25px;
@@ -137,7 +145,7 @@ input, select, textarea {
     box-sizing: border-box;
 }
 
-/* --- TABLEAUX RESPONSIVES --- */
+/* --- TABLEAUX --- */
 .table-responsive {
     overflow-x: auto;
     border: 1px solid var(--border);
@@ -175,7 +183,7 @@ body.light-mode .btn-admin { color: white !important; }
 .alert-error { background: rgba(231, 76, 60, 0.2); color: #e74c3c; border: 1px solid #e74c3c; }
 .alert-success { background: rgba(39, 174, 96, 0.2); color: #27ae60; border: 1px solid #27ae60; }
 
-/* --- MEDIA QUERY GLOBAL --- */
+/* --- MOBILE SPECIFIQUE (General) --- */
 @media (max-width: 768px) {
     header { height: auto; flex-direction: column; gap: 15px; text-align: center; padding-bottom: 15px;}
     .nav-links { width: 100%; justify-content: center; }
@@ -185,10 +193,10 @@ body.light-mode .btn-admin { color: white !important; }
 
 
 /* =========================================
-   LECTEUR (PAGE LECTURE.PHP) - SPLIT SCREEN
+   4. LECTEUR (PAGE LECTURE.PHP)
    ========================================= */
 
-/* 1. CONFIGURATION MOBILE (Par défaut) */
+/* --- CONFIGURATION MOBILE (Par défaut) --- */
 .container-lecture {
     width: 100%;
     padding: 15px;
@@ -205,7 +213,6 @@ body.light-mode .btn-admin { color: white !important; }
     border-radius: 8px;
     overflow: hidden;
     box-shadow: var(--shadow);
-    /* Hauteur minimale sur mobile pour ne pas être écrasé */
     min-height: 250px; 
 }
 
@@ -216,7 +223,6 @@ body.light-mode .btn-admin { color: white !important; }
     border: 1px solid var(--border);
 }
 
-/* Le lecteur prend une bonne hauteur sur mobile */
 iframe.pdf-viewer, video {
     width: 100%;
     height: 60vh; /* 60% de la hauteur de l'écran mobile */
@@ -228,7 +234,7 @@ iframe.pdf-viewer, video {
 .lecture-meta { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; }
 
 
-/* 2. CONFIGURATION ORDI (Écrans larges > 1024px) */
+/* --- CONFIGURATION ORDI (Écrans > 1024px) --- */
 @media (min-width: 1024px) {
     
     /* On fige la page pour faire comme une application */
@@ -240,8 +246,8 @@ iframe.pdf-viewer, video {
         /* On remplit tout l'espace restant sous le header */
         height: calc(100vh - 65px); 
         margin: 0;
-        padding: 0 !important; /* <--- AJOUT IMPORTANT : Colle aux bords */
-        flex-direction: row;
+        padding: 0 !important; /* Colle aux bords */
+        flex-direction: row; /* Côte à côte */
         gap: 0;
     }
 
@@ -249,17 +255,28 @@ iframe.pdf-viewer, video {
     .player-wrapper {
         flex: 7; /* 70% de largeur */
         height: 100%; /* Toute la hauteur */
-        border-radius: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         background: #000;
+        border-radius: 0;
+        
+        /* FIX POUR LE PDF : On retire flex pour laisser le block prendre 100% */
+        display: block;
+        position: relative;
     }
 
-    /* On force la hauteur à 100% du bloc parent */
-    iframe.pdf-viewer, video {
-        height: 100%; 
+    /* Le PDF doit forcer la taille à 100% du bloc parent */
+    iframe.pdf-viewer {
         width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+    }
+
+    /* La vidéo garde ses proportions avec des bandes noires auto */
+    video {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; 
+        display: block;
     }
 
     /* DROITE : Les Infos */
@@ -269,7 +286,7 @@ iframe.pdf-viewer, video {
         border-radius: 0;
         border: none;
         border-left: 1px solid var(--border);
-        overflow-y: auto; /* Scroll uniquement ici si besoin */
+        overflow-y: auto; /* Scroll uniquement ici */
         padding: 30px;
         min-width: 350px;
     }
