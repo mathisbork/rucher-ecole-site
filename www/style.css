@@ -132,48 +132,60 @@ iframe.pdf-viewer, video { width: 100%; height: 60vh; border: none; display: blo
 /* --- CONFIGURATION ORDI (Écrans > 1024px) --- */
 @media (min-width: 1024px) {
     
+    /* On fige le scroll général du site, c'est les blocs qui scrollent */
     body.lecture-page {
         overflow: hidden !important; 
     }
 
     .container-lecture {
+        /* Hauteur fixe (Taille de l'écran - Header) */
         height: calc(100vh - 65px) !important; 
         margin: 0 !important;
         padding: 0 !important;
-        display: flex !important; 
-        flex-direction: row !important;
-        align-items: stretch !important; /* Force la hauteur max */
-    }
-
-    .player-wrapper {
-        flex: 7 !important;
-        background: #000 !important;
-        border-radius: 0 !important;
         
-        /* ICI C'EST LE CORRECTIF CRITIQUE */
         display: flex !important;
-        flex-direction: column !important;
-        height: 100% !important;
-        
-        /* ON ÉCRASE L'ANCIEN CODE DE MERDE */
-        align-items: stretch !important; 
-        justify-content: flex-start !important; 
+        flex-direction: row !important; /* Ligne standard (Info gauche, PDF droite) */
+        align-items: flex-start !important;
     }
 
-    iframe.pdf-viewer, video {
-        flex: 1 !important; /* PREND TOUTE LA PLACE RESTANTE */
+    /* --- BLOC INFO (GAUCHE) --- */
+    .lecture-info {
+        flex: 2 !important; /* Prend 20-25% de la place */
+        width: 300px !important;
+        min-width: 300px !important;
+        max-width: 400px !important;
+        
+        height: 100% !important; /* Toute la hauteur */
+        overflow-y: auto !important; /* Scrollable si trop de texte */
+        
+        border-right: 1px solid var(--border) !important;
+        border-radius: 0 !important;
+        padding: 25px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* --- BLOC LECTEUR (DROITE) --- */
+    .player-wrapper {
+        flex: 8 !important; /* Prend le reste (75-80%) */
+        height: 100% !important; /* Toute la hauteur */
+        background: #000 !important; /* Fond noir si jamais y'a un trou */
+        border-radius: 0 !important;
+        display: block !important;
+        position: relative !important;
+    }
+
+    /* LE PDF LUI-MÊME */
+    iframe.pdf-viewer {
         width: 100% !important;
-        height: 100% !important;
+        height: 100% !important; /* Remplit tout le bloc de droite */
         border: none !important;
         display: block !important;
     }
 
-    .lecture-info {
-        flex: 3 !important;
+    /* VIDEO */
+    video {
+        width: 100% !important;
         height: 100% !important;
-        border-left: 1px solid var(--border) !important;
-        overflow-y: auto !important;
-        padding: 30px !important;
-        min-width: 350px !important;
+        object-fit: contain !important; /* Garde le ratio vidéo */
     }
 }
