@@ -1,34 +1,37 @@
-/* style.css */
+/* style.css - VERSION FINALE */
+
+/* --- VARIABLES & THÈMES --- */
 :root {
     /* --- PAR DÉFAUT : THÈME SOMBRE --- */
     --bg: #121212;
     --card-bg: #1e1e1e;
     --text: #e0e0e0;
     --text-muted: #bbbbbb;
-    --primary: #81ecec;
-    --accent: #e67e22;
+    --primary: #81ecec; /* Cyan clair */
+    --accent: #e67e22;  /* Orange */
     --border: #333333;
     --shadow: 0 4px 6px rgba(0,0,0,0.4);
     --danger: #e74c3c;
     --success: #27ae60;
 }
 
-/* --- LIGHT-MODE --- */
+/* --- LIGHT-MODE (Pour le bouton Soleil) --- */
 body.light-mode {
     --bg: #f4f6f9;
     --card-bg: #ffffff;
     --text: #333333;
     --text-muted: #666666;
-    --primary: #2c3e50;
+    --primary: #2c3e50; /* Bleu nuit */
     --accent: #d35400;
     --border: #dddddd;
     --shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
+/* --- BASES --- */
 body {
     background-color: var(--bg);
     color: var(--text);
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
     margin: 0;
     display: flex;
@@ -36,7 +39,7 @@ body {
     min-height: 100vh;
 }
 
-/* --- Header --- */
+/* --- HEADER --- */
 header {
     background: var(--card-bg);
     padding: 15px 20px;
@@ -44,7 +47,9 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap; /* Permet le passage à la ligne sur mobile */
+    flex-wrap: wrap; /* Important pour mobile */
+    height: 65px; /* Hauteur fixe pour le calcul du Split Screen */
+    box-sizing: border-box;
 }
 
 .logo {
@@ -63,7 +68,7 @@ header {
     gap: 15px;
 }
 
-/* --- Layout --- */
+/* --- CONTAINERS & LAYOUT --- */
 .container {
     max-width: 1200px;
     margin: 30px auto;
@@ -73,27 +78,27 @@ header {
     box-sizing: border-box;
 }
 
-/* --- Grilles et Flexbox Responsives --- */
-/* Wrapper pour mettre deux formulaires côte à côte */
-.responsive-wrapper {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap; /* CRUCIAL : Passe à la ligne si pas de place */
-    margin-bottom: 40px;
-}
-
-.responsive-col {
-    flex: 1;
-    min-width: 300px; /* Si l'écran fait moins de 300px dispo, ça passe à la ligne */
-}
-
+/* --- GRILLES (Cours & Admin) --- */
 .grid-cours, .grid-admin {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
 }
 
-/* --- Cartes --- */
+/* --- FORMULAIRES RESPONSIVES (Admin) --- */
+.responsive-wrapper {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap; /* Passe à la ligne sur mobile */
+    margin-bottom: 40px;
+}
+
+.responsive-col {
+    flex: 1;
+    min-width: 300px;
+}
+
+/* --- CARTES (Design Cards) --- */
 .card {
     background: var(--card-bg);
     border: 1px solid var(--border);
@@ -102,19 +107,22 @@ header {
     box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
+    transition: transform 0.2s;
 }
 .card:hover { transform: translateY(-3px); }
+
 .card-img {
     height: 140px;
     background: var(--primary);
     display: flex; align-items: center; justify-content: center;
     font-size: 3rem; color: var(--bg);
 }
+
 .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
 .card-title { margin-top: 0; font-size: 1.1rem; }
 .card-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; flex-grow: 1; }
 
-/* --- Formulaires --- */
+/* --- INPUTS & BOITES --- */
 .auth-box {
     background: var(--card-bg);
     padding: 25px;
@@ -126,77 +134,92 @@ input, select, textarea {
     width: 100%; padding: 12px; margin-bottom: 15px;
     background: var(--bg); color: var(--text);
     border: 1px solid var(--border); border-radius: 6px;
-    box-sizing: border-box; /* Empêche le débordement */
+    box-sizing: border-box;
 }
 
-/* --- Tableaux Responsives --- */
+/* --- TABLEAUX RESPONSIVES --- */
 .table-responsive {
-    overflow-x: auto; /* Ajoute une barre de défilement horizontale si besoin */
+    overflow-x: auto;
     border: 1px solid var(--border);
     border-radius: 8px;
 }
-.table-admin { width: 100%; border-collapse: collapse; min-width: 600px; } /* Force une largeur min */
+.table-admin { width: 100%; border-collapse: collapse; min-width: 600px; }
 .table-admin th, .table-admin td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); color: var(--text); }
 .table-admin th { background: var(--card-bg); font-weight: bold; white-space: nowrap; }
 
-/* --- Boutons et Badges --- */
+/* --- BOUTONS & BADGES --- */
 .btn-main {
     background: var(--accent); color: white; border: none; padding: 12px;
     border-radius: 6px; text-align: center; text-decoration: none;
     font-weight: bold; cursor: pointer; width: 100%; display: block; box-sizing: border-box;
 }
+.btn-main:hover { opacity: 0.9; }
+
 .btn-toggle-theme {
     background: none; border: 1px solid var(--border); border-radius: 50%;
     width: 35px; height: 35px; cursor: pointer; color: var(--text);
     display: flex; align-items: center; justify-content: center;
 }
+.btn-admin {
+    background-color: var(--primary); color: #121212 !important;
+    padding: 8px 12px; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 0.9rem;
+}
+body.light-mode .btn-admin { color: white !important; }
+.btn-logout { color: var(--danger) !important; text-decoration: none; font-size: 1.1rem; }
+
 .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; margin-bottom: 10px; width: fit-content; }
 .badge.video { background: rgba(230, 126, 34, 0.2); color: var(--accent); border: 1px solid var(--accent); }
 .badge.pdf { background: rgba(46, 204, 113, 0.2); color: #2ecc71; border: 1px solid #2ecc71; }
-.alert { padding: 10px; border-radius: 6px; margin-bottom: 15px; }
+
+.alert { padding: 10px; border-radius: 6px; margin-bottom: 15px; text-align: center;}
 .alert-error { background: rgba(231, 76, 60, 0.2); color: #e74c3c; border: 1px solid #e74c3c; }
 .alert-success { background: rgba(39, 174, 96, 0.2); color: #27ae60; border: 1px solid #27ae60; }
 
-/* --- MOBILE SPECIFIQUE --- */
+/* --- MEDIA QUERY GLOBAL --- */
 @media (max-width: 768px) {
-    header { flex-direction: column; gap: 15px; text-align: center; }
+    header { height: auto; flex-direction: column; gap: 15px; text-align: center; padding-bottom: 15px;}
     .nav-links { width: 100%; justify-content: center; }
     .responsive-wrapper { flex-direction: column; }
-    .btn-admin { font-size: 0.8rem; }
     h1 { font-size: 1.5rem; text-align: center; }
 }
 
-/* --- LECTEUR (lecture.php) - DESIGN HYBRIDE --- */
 
-/* 1. Base (Mobile First) */
-.lecture-container {
+/* =========================================
+   LECTEUR (PAGE LECTURE.PHP) - SPLIT SCREEN
+   ========================================= */
+
+/* 1. CONFIGURATION MOBILE (Par défaut) */
+.container-lecture {
     width: 100%;
-    margin: 0 auto;
+    padding: 15px;
+    box-sizing: border-box;
     display: flex;
-    flex-direction: column; /* Empilé par défaut sur mobile */
+    flex-direction: column; /* Les éléments s'empilent */
     gap: 20px;
+    flex: 1;
 }
 
 .player-wrapper {
     background: #000;
+    width: 100%;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: var(--shadow);
-    width: 100%;
+    /* Hauteur minimale sur mobile pour ne pas être écrasé */
+    min-height: 250px; 
 }
 
 .lecture-info {
     background: var(--card-bg);
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 8px;
     border: 1px solid var(--border);
-    box-sizing: border-box;
 }
 
-/* Réglages par défaut (Mobile) */
+/* Le lecteur prend une bonne hauteur sur mobile */
 iframe.pdf-viewer, video {
     width: 100%;
-    height: 60vh; /* Hauteur confortable sur mobile */
+    height: 60vh; /* 60% de la hauteur de l'écran mobile */
     border: none;
     display: block;
 }
@@ -205,46 +228,49 @@ iframe.pdf-viewer, video {
 .lecture-meta { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; }
 
 
-/* 2. MODE ORDINATEUR (Grand Écran > 1024px) */
-/* C'est ici qu'on remplit le vide ! */
+/* 2. CONFIGURATION ORDI (Écrans larges > 1024px) */
 @media (min-width: 1024px) {
     
-    /* On retire la marge du container principal pour utiliser toute la largeur */
-    .container {
-        max-width: 100%;
-        padding: 0 20px;
-        height: calc(100vh - 80px); /* Prend toute la hauteur moins le header */
-        box-sizing: border-box;
-        margin: 0; /* Colle au header */
-        display: flex; /* Active le mode flex pour l'enfant direct */
-        flex-direction: column;
+    /* On fige la page pour faire comme une application */
+    body.lecture-page {
+        overflow: hidden; 
     }
 
-    .lecture-container {
-        flex-direction: row; /* On passe en mode CÔTE À CÔTE */
-        height: 100%; /* Remplit la hauteur */
-        padding-top: 20px;
-        padding-bottom: 20px;
+    .container-lecture {
+        /* On remplit tout l'espace restant sous le header */
+        height: calc(100vh - 65px); 
+        margin: 0;
+        padding: 0;
+        flex-direction: row; /* On passe côte à côte */
+        gap: 0;
     }
 
-    /* COLONNE GAUCHE : Le Lecteur (Prend 75% de la place) */
+    /* GAUCHE : Le Lecteur (Noir) */
     .player-wrapper {
-        flex: 3; 
-        height: 100%; /* Prend toute la hauteur disponible */
+        flex: 7; /* 70% de largeur */
+        height: 100%; /* Toute la hauteur */
+        border-radius: 0;
         display: flex;
-        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #000;
     }
 
+    /* On force la hauteur à 100% du bloc parent */
     iframe.pdf-viewer, video {
-        height: 100%; /* Le PDF prend 100% du bloc noir */
+        height: 100%; 
         width: 100%;
     }
 
-    /* COLONNE DROITE : La Description (Prend 25% de la place) */
+    /* DROITE : Les Infos */
     .lecture-info {
-        flex: 1;
-        height: 100%;
-        overflow-y: auto; /* Ajoute un scroll si la description est très longue */
-        min-width: 300px; /* Ne devient jamais trop petite */
+        flex: 3; /* 30% de largeur */
+        height: 100%; /* Toute la hauteur */
+        border-radius: 0;
+        border: none;
+        border-left: 1px solid var(--border);
+        overflow-y: auto; /* Scroll uniquement ici si besoin */
+        padding: 30px;
+        min-width: 350px;
     }
 }
