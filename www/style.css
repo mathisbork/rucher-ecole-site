@@ -166,66 +166,85 @@ input, select, textarea {
     h1 { font-size: 1.5rem; text-align: center; }
 }
 
-/* --- LECTEUR (lecture.php) RESPONSIVE --- */
+/* --- LECTEUR (lecture.php) - DESIGN HYBRIDE --- */
+
+/* 1. Base (Mobile First) */
 .lecture-container {
-    max-width: 900px; /* Largeur max idéale pour la lecture */
-    margin: 0 auto;
     width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column; /* Empilé par défaut sur mobile */
+    gap: 20px;
 }
 
 .player-wrapper {
     background: #000;
     border-radius: 8px;
     overflow: hidden;
-    margin-bottom: 20px;
     box-shadow: var(--shadow);
-    /* Permet de centrer le contenu */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100%;
 }
 
-/* Pour la VIDÉO : Responsive tout en gardant les proportions */
-video {
-    width: 100%;
-    height: auto;
-    max-height: 80vh; /* Ne pas dépasser 80% de la hauteur de l'écran */
-    display: block;
+.lecture-info {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-sizing: border-box;
 }
 
-/* Pour le PDF : Doit être assez haut sur mobile */
-iframe.pdf-viewer {
+/* Réglages par défaut (Mobile) */
+iframe.pdf-viewer, video {
     width: 100%;
-    height: 80vh; /* Prend 80% de la hauteur de l'écran du téléphone */
+    height: 60vh; /* Hauteur confortable sur mobile */
     border: none;
     display: block;
 }
 
-/* Description sous le lecteur */
-.lecture-info {
-    background: var(--card-bg);
-    padding: 25px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-}
+.lecture-title { margin-top: 0; color: var(--accent); font-size: 1.4rem; }
+.lecture-meta { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; }
 
-.lecture-title {
-    color: var(--accent);
-    margin-top: 0;
-    font-size: 1.5rem;
-}
 
-.lecture-meta {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    margin-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 15px;
-}
+/* 2. MODE ORDINATEUR (Grand Écran > 1024px) */
+/* C'est ici qu'on remplit le vide ! */
+@media (min-width: 1024px) {
+    
+    /* On retire la marge du container principal pour utiliser toute la largeur */
+    .container {
+        max-width: 100%;
+        padding: 0 20px;
+        height: calc(100vh - 80px); /* Prend toute la hauteur moins le header */
+        box-sizing: border-box;
+        margin: 0; /* Colle au header */
+        display: flex; /* Active le mode flex pour l'enfant direct */
+        flex-direction: column;
+    }
 
-/* Sur très petits écrans (mobiles anciens) */
-@media (max-width: 480px) {
-    .lecture-info { padding: 15px; }
-    .lecture-title { font-size: 1.3rem; }
-    iframe.pdf-viewer { height: 70vh; }
+    .lecture-container {
+        flex-direction: row; /* On passe en mode CÔTE À CÔTE */
+        height: 100%; /* Remplit la hauteur */
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    /* COLONNE GAUCHE : Le Lecteur (Prend 75% de la place) */
+    .player-wrapper {
+        flex: 3; 
+        height: 100%; /* Prend toute la hauteur disponible */
+        display: flex;
+        flex-direction: column;
+    }
+
+    iframe.pdf-viewer, video {
+        height: 100%; /* Le PDF prend 100% du bloc noir */
+        width: 100%;
+    }
+
+    /* COLONNE DROITE : La Description (Prend 25% de la place) */
+    .lecture-info {
+        flex: 1;
+        height: 100%;
+        overflow-y: auto; /* Ajoute un scroll si la description est très longue */
+        min-width: 300px; /* Ne devient jamais trop petite */
+    }
 }
