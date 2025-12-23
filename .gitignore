@@ -1,0 +1,5 @@
+# .gitignore
+.env
+protected_uploads/
+.DS_Store
+Thumbs.db

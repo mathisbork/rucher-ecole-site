@@ -1,0 +1,48 @@
+
+version: '3.8'
+
+services:
+  # --- Le Serveur Web (Apache + PHP) ---
+  web:
+    container_name: site-rucher-ecole
+    build: .
+    ports:
+      - "8084:80" # Accès via http://localhost:8080
+    volumes:
+      - ./www:/var/www/html # Lien entre votre dossier www et le conteneur
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini # <--- AJOUTEZ CETTE LIGNE
+      - ./protected_uploads:/var/www/protected_uploads
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    depends_on:
+      - db
+
+  # --- La Base de Données (MariaDB) ---
+  db:
+    image: mariadb:10.6
+    container_name: db-rucher-ecole
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+
+  # --- Interface de gestion BDD (PhpMyAdmin) ---
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma-rucher-ecole
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "8085:80"
+    depends_on:
+      - db
+
+volumes:
+  db_data:
