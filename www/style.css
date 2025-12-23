@@ -1,50 +1,93 @@
 /* style.css */
 :root {
-    --primary: #2c3e50;    /* Bleu nuit */
-    --accent: #e67e22;     /* Orange Miel */
-    --bg: #f4f6f9;         /* Gris très clair */
+    /* --- PAR DÉFAUT : THÈME SOMBRE --- */
+    --bg: #121212;
+    --card-bg: #1e1e1e;
+    --text: #e0e0e0;
+    --text-muted: #bbbbbb;
+    --primary: #81ecec; /* Cyan clair pour ressortir sur le noir */
+    --accent: #e67e22;  /* Orange Miel */
+    --border: #333333;
+    --shadow: 0 4px 6px rgba(0,0,0,0.4);
+}
+
+/* --- CLASSE LIGHT-MODE (Pour ceux qui veulent du blanc) --- */
+body.light-mode {
+    --bg: #f4f6f9;
     --card-bg: #ffffff;
-    --text: #333;
-    --danger: #e74c3c;
-    --success: #27ae60;
+    --text: #333333;
+    --text-muted: #666666;
+    --primary: #2c3e50; /* Bleu nuit */
+    --accent: #d35400;
+    --border: #dddddd;
+    --shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--bg);
     color: var(--text);
+    font-family: 'Segoe UI', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
     margin: 0;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-/* --- Navigation --- */
+/* --- Header --- */
 header {
     background: var(--card-bg);
     padding: 15px 30px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .logo {
-    font-size: 22px;
+    color: var(--accent);
     font-weight: bold;
-    color: var(--primary);
     text-decoration: none;
+    font-size: 1.3rem;
 }
 
-.nav-links a {
-    text-decoration: none;
-    color: var(--text);
-    margin-left: 20px;
-    font-weight: 500;
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
+
+/* Boutons */
+.btn-toggle-theme {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+.btn-toggle-theme:hover { background: rgba(255,255,255,0.1); }
+
+.btn-admin {
+    background-color: var(--primary);
+    color: #121212 !important; /* Texte noir sur fond cyan */
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+body.light-mode .btn-admin { color: white !important; } /* Texte blanc sur fond bleu nuit */
 
 .btn-logout {
-    color: var(--danger) !important;
+    color: #e74c3c !important;
+    text-decoration: none;
+    font-size: 1.1rem;
 }
 
 /* --- Layout --- */
@@ -55,119 +98,78 @@ header {
     flex: 1;
 }
 
-h1, h2 { color: var(--primary); }
+h1, h2, h3 { color: var(--text); }
 
-/* --- Cartes de Cours --- */
-.grid-cours {
+/* --- Cartes --- */
+.grid-cours, .grid-admin {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px;
+    gap: 25px;
 }
 
 .card {
     background: var(--card-bg);
+    border: 1px solid var(--border);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
+    transition: transform 0.2s;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
+.card:hover { transform: translateY(-5px); }
 
 .card-img {
     height: 160px;
-    background: var(--primary);
+    background: var(--primary); /* Couleur variable selon le thème */
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-size: 50px;
+    font-size: 3rem;
+    color: var(--bg); /* L'icône prend la couleur du fond de page */
 }
 
-.card-body {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
+.card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+.card-title { margin-top: 0; }
+.card-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; flex-grow: 1; }
 
 .badge {
-    display: inline-block;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    width: fit-content;
+    display: inline-block; padding: 4px 8px; border-radius: 4px; 
+    font-size: 0.75rem; font-weight: bold; margin-bottom: 10px; width: fit-content;
 }
-.badge.video { background: #fff3cd; color: #856404; }
-.badge.pdf { background: #d1ecf1; color: #0c5460; }
-
-.card-title {
-    font-size: 1.2rem;
-    margin: 0 0 10px 0;
-}
-
-.card-desc {
-    color: #666;
-    font-size: 0.9rem;
-    margin-bottom: 20px;
-    flex-grow: 1;
-}
+.badge.video { background: rgba(230, 126, 34, 0.2); color: var(--accent); border: 1px solid var(--accent); }
+.badge.pdf { background: rgba(46, 204, 113, 0.2); color: #2ecc71; border: 1px solid #2ecc71; }
 
 .btn-main {
-    display: block;
     background: var(--accent);
     color: white;
-    text-align: center;
+    border: none;
     padding: 10px;
     border-radius: 6px;
+    text-align: center;
     text-decoration: none;
     font-weight: bold;
-    transition: background 0.3s;
-    border: none;
     cursor: pointer;
     width: 100%;
+    display: block;
     box-sizing: border-box;
 }
+.btn-main:hover { opacity: 0.9; }
 
-.btn-main:hover { background: #d35400; }
-
-/* --- Formulaires (Login/Inscription) --- */
+/* --- Formulaires --- */
 .auth-box {
     max-width: 400px;
     margin: 60px auto;
-    background: white;
+    background: var(--card-bg);
     padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
 }
-
-.form-group { margin-bottom: 15px; }
-
-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+input, select, textarea {
+    width: 100%; padding: 12px; margin-bottom: 15px;
+    background: var(--bg); color: var(--text);
+    border: 1px solid var(--border); border-radius: 6px;
     box-sizing: border-box;
-}
-
-.alert {
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    text-align: center;
-}
-.alert-error { background: #f8d7da; color: #721c24; }
-.alert-success { background: #d4edda; color: #155724; }
-
-/* --- Impression (Cache tout) --- */
-@media print {
-    body { display: none; }
 }
