@@ -82,11 +82,12 @@ if (!$cours) die("Accès refusé.");
             var iframe = document.getElementById("pdfFrame");
             if (iframe) {
                 var baseUrl = iframe.getAttribute("data-src");
-                // Si l'écran est large (PC > 1024px) -> On adapte à la HAUTEUR (FitV)
-                // Si l'écran est petit (Mobile) -> On adapte à la LARGEUR (FitH)
-                var zoomMode = (window.innerWidth >= 1024) ? "&view=FitV" : "&view=FitH";
                 
-                // On lance le chargement avec le bon paramètre
+                // ON CHANGE ICI : On force FitH (Largeur) partout.
+                // Cela va remplir le bloc noir et rendre le texte lisible.
+                // "scrollbar=1" assure qu'on peut descendre dans la page.
+                var zoomMode = "&view=FitH&scrollbar=1&toolbar=0&navpanes=0";
+                
                 iframe.src = baseUrl + zoomMode;
             }
         });

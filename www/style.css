@@ -240,8 +240,8 @@ iframe.pdf-viewer, video {
         /* On remplit tout l'espace restant sous le header */
         height: calc(100vh - 65px); 
         margin: 0;
-        padding: 0;
-        flex-direction: row; /* On passe côte à côte */
+        padding: 0 !important; /* <--- AJOUT IMPORTANT : Colle aux bords */
+        flex-direction: row;
         gap: 0;
     }
 
