@@ -151,9 +151,9 @@ iframe.pdf-viewer, video { width: 100%; height: 60vh; border: none; display: blo
     /* --- BLOC INFO (GAUCHE) --- */
     .lecture-info {
         flex: 2 !important; /* Prend 20-25% de la place */
-        width: 300px !important;
-        min-width: 300px !important;
-        max-width: 400px !important;
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
         
         height: 100% !important; /* Toute la hauteur */
         overflow-y: auto !important; /* Scrollable si trop de texte */
