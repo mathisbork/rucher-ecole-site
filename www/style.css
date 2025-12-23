@@ -139,7 +139,7 @@ iframe.pdf-viewer, video { width: 100%; height: 60vh; border: none; display: blo
 
     .container-lecture {
         /* Hauteur fixe (Taille de l'écran - Header) */
-        height: calc(100vh - 65px) !important; 
+        height: calc(100% - 65px) !important; 
         margin: 0 !important;
         padding: 0 !important;
         
