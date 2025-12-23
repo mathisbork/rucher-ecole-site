@@ -1,36 +1,34 @@
-/* style.css - VERSION FINALE CORRIGÉE */
+/* style.css - VERSION FINALE ETIRÉE (NO BLACK BARS) */
 
 /* =========================================
    1. VARIABLES & THÈMES
    ========================================= */
 :root {
-    /* --- PAR DÉFAUT : THÈME SOMBRE --- */
     --bg: #121212;
     --card-bg: #1e1e1e;
     --text: #e0e0e0;
     --text-muted: #bbbbbb;
-    --primary: #81ecec; /* Cyan clair */
-    --accent: #e67e22;  /* Orange */
+    --primary: #81ecec;
+    --accent: #e67e22;
     --border: #333333;
     --shadow: 0 4px 6px rgba(0,0,0,0.4);
     --danger: #e74c3c;
     --success: #27ae60;
 }
 
-/* --- LIGHT-MODE (Pour le bouton Soleil) --- */
 body.light-mode {
     --bg: #f4f6f9;
     --card-bg: #ffffff;
     --text: #333333;
     --text-muted: #666666;
-    --primary: #2c3e50; /* Bleu nuit */
+    --primary: #2c3e50;
     --accent: #d35400;
     --border: #dddddd;
     --shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
 /* =========================================
-   2. BASES & LAYOUT GÉNÉRAL
+   2. BASES
    ========================================= */
 body {
     background-color: var(--bg);
@@ -43,7 +41,6 @@ body {
     min-height: 100vh;
 }
 
-/* --- HEADER --- */
 header {
     background: var(--card-bg);
     padding: 15px 20px;
@@ -52,27 +49,13 @@ header {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap; 
-    height: 65px; /* Hauteur fixe pour le calcul du Split Screen */
+    height: 65px;
     box-sizing: border-box;
 }
 
-.logo {
-    color: var(--accent);
-    font-weight: bold;
-    text-decoration: none;
-    font-size: 1.3rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+.logo { color: var(--accent); font-weight: bold; text-decoration: none; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
+.nav-links { display: flex; align-items: center; gap: 15px; }
 
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-/* --- CONTENEUR STANDARD --- */
 .container {
     max-width: 1200px;
     margin: 30px auto;
@@ -83,107 +66,44 @@ header {
 }
 
 /* =========================================
-   3. COMPOSANTS (Cartes, Boutons, Tables)
+   3. COMPOSANTS
    ========================================= */
+.grid-cours, .grid-admin { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+.responsive-wrapper { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 40px; }
+.responsive-col { flex: 1; min-width: 300px; }
 
-/* --- GRILLES --- */
-.grid-cours, .grid-admin {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-}
-
-/* --- FORMULAIRES ADMIN (RESPONSIVE) --- */
-.responsive-wrapper {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap; /* Passe à la ligne sur mobile */
-    margin-bottom: 40px;
-}
-
-.responsive-col {
-    flex: 1;
-    min-width: 300px;
-}
-
-/* --- CARTES --- */
 .card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.2s;
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
+    overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; transition: transform 0.2s;
 }
 .card:hover { transform: translateY(-3px); }
-
-.card-img {
-    height: 140px;
-    background: var(--primary);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 3rem; color: var(--bg);
-}
-
+.card-img { height: 140px; background: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--bg); }
 .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
 .card-title { margin-top: 0; font-size: 1.1rem; }
 .card-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; flex-grow: 1; }
 
-/* --- INPUTS --- */
-.auth-box {
-    background: var(--card-bg);
-    padding: 25px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow);
-}
-input, select, textarea {
-    width: 100%; padding: 12px; margin-bottom: 15px;
-    background: var(--bg); color: var(--text);
-    border: 1px solid var(--border); border-radius: 6px;
-    box-sizing: border-box;
-}
+.auth-box { background: var(--card-bg); padding: 25px; border-radius: 10px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+input, select, textarea { width: 100%; padding: 12px; margin-bottom: 15px; background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 6px; box-sizing: border-box; }
 
-/* --- TABLEAUX --- */
-.table-responsive {
-    overflow-x: auto;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-}
+.table-responsive { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; }
 .table-admin { width: 100%; border-collapse: collapse; min-width: 600px; }
 .table-admin th, .table-admin td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); color: var(--text); }
 .table-admin th { background: var(--card-bg); font-weight: bold; white-space: nowrap; }
 
-/* --- BOUTONS & BADGES --- */
-.btn-main {
-    background: var(--accent); color: white; border: none; padding: 12px;
-    border-radius: 6px; text-align: center; text-decoration: none;
-    font-weight: bold; cursor: pointer; width: 100%; display: block; box-sizing: border-box;
-}
+.btn-main { background: var(--accent); color: white; border: none; padding: 12px; border-radius: 6px; text-align: center; text-decoration: none; font-weight: bold; cursor: pointer; width: 100%; display: block; box-sizing: border-box; }
 .btn-main:hover { opacity: 0.9; }
-
-.btn-toggle-theme {
-    background: none; border: 1px solid var(--border); border-radius: 50%;
-    width: 35px; height: 35px; cursor: pointer; color: var(--text);
-    display: flex; align-items: center; justify-content: center;
-}
-.btn-admin {
-    background-color: var(--primary); color: #121212 !important;
-    padding: 8px 12px; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 0.9rem;
-}
+.btn-toggle-theme { background: none; border: 1px solid var(--border); border-radius: 50%; width: 35px; height: 35px; cursor: pointer; color: var(--text); display: flex; align-items: center; justify-content: center; }
+.btn-admin { background-color: var(--primary); color: #121212 !important; padding: 8px 12px; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
 body.light-mode .btn-admin { color: white !important; }
 .btn-logout { color: var(--danger) !important; text-decoration: none; font-size: 1.1rem; }
 
 .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; margin-bottom: 10px; width: fit-content; }
 .badge.video { background: rgba(230, 126, 34, 0.2); color: var(--accent); border: 1px solid var(--accent); }
 .badge.pdf { background: rgba(46, 204, 113, 0.2); color: #2ecc71; border: 1px solid #2ecc71; }
-
 .alert { padding: 10px; border-radius: 6px; margin-bottom: 15px; text-align: center;}
 .alert-error { background: rgba(231, 76, 60, 0.2); color: #e74c3c; border: 1px solid #e74c3c; }
 .alert-success { background: rgba(39, 174, 96, 0.2); color: #27ae60; border: 1px solid #27ae60; }
 
-/* --- MOBILE SPECIFIQUE (General) --- */
 @media (max-width: 768px) {
     header { height: auto; flex-direction: column; gap: 15px; text-align: center; padding-bottom: 15px;}
     .nav-links { width: 100%; justify-content: center; }
@@ -191,98 +111,56 @@ body.light-mode .btn-admin { color: white !important; }
     h1 { font-size: 1.5rem; text-align: center; }
 }
 
-
 /* =========================================
-   4. LECTEUR (PAGE LECTURE.PHP)
+   4. LECTEUR (C'est ici qu'on corrige)
    ========================================= */
 
-/* --- CONFIGURATION MOBILE (Par défaut) --- */
+/* MOBILE FIRST */
 .container-lecture {
-    width: 100%;
-    padding: 15px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column; /* Les éléments s'empilent */
-    gap: 20px;
-    flex: 1;
+    width: 100%; padding: 15px; box-sizing: border-box;
+    display: flex; flex-direction: column; gap: 20px; flex: 1;
 }
-
 .player-wrapper {
-    background: #000;
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    min-height: 250px; 
+    background: #000; width: 100%; border-radius: 8px; overflow: hidden;
+    box-shadow: var(--shadow); min-height: 250px; 
 }
-
-.lecture-info {
-    background: var(--card-bg);
-    padding: 20px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-}
-
-iframe.pdf-viewer, video {
-    width: 100%;
-    height: 60vh; /* 60% de la hauteur de l'écran mobile */
-    border: none;
-    display: block;
-}
-
+.lecture-info { background: var(--card-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border); }
+iframe.pdf-viewer, video { width: 100%; height: 60vh; border: none; display: block; }
 .lecture-title { margin-top: 0; color: var(--accent); font-size: 1.4rem; }
 .lecture-meta { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; }
 
-
-/* --- CONFIGURATION ORDI (Écrans > 1024px) --- */
+/* ORDINATEUR (ECRANS LARGES) */
 @media (min-width: 1024px) {
-    
-    /* On fige la page pour éviter le double scroll */
-    body.lecture-page {
-        overflow: hidden; 
-    }
+    body.lecture-page { overflow: hidden; } /* Fige la page */
 
     .container-lecture {
-        /* HAUTEUR FIXE : Toute la hauteur moins le header */
-        height: calc(100vh - 65px); 
-        margin: 0;
-        padding: 0 !important;
-        display: flex; 
-        flex-direction: row; /* Côte à côte */
-        align-items: stretch; /* Force les colonnes à prendre toute la hauteur */
+        height: calc(100vh - 65px); /* Toute la hauteur disponible */
+        margin: 0; padding: 0 !important;
+        flex-direction: row; /* Cote a cote */
+        gap: 0;
+        align-items: stretch; /* On tire sur les éléments */
     }
 
-    /* GAUCHE : Le Lecteur (Noir) */
     .player-wrapper {
-        flex: 7; /* 70% de largeur */
-        background: #000;
-        border-radius: 0;
-        
-        /* LA CORRECTION EST ICI : */
-        display: flex;         /* On transforme le wrapper en Flexbox aussi */
-        flex-direction: column; /* Direction verticale */
+        flex: 7;
+        background: #000; border-radius: 0;
+        /* LE CORRECTIF CRITIQUE EST ICI : */
+        display: flex;          /* Mode Flex */
+        flex-direction: column; /* Vertical */
         height: 100%;           /* Force la hauteur */
+        /* On retire 'align-items: center' qui faisait le bug */
     }
 
-    /* L'enfant (PDF ou Vidéo) doit "grandir" pour tout remplir */
     iframe.pdf-viewer, video {
-        flex: 1;       /* MAGIQUE : Prend tout l'espace disponible verticalement */
+        flex: 1;      /* Le PDF grandit pour tout remplir */
         width: 100%;
-        height: 100%;  /* Sécurité */
+        height: 100%;
         border: none;
         object-fit: contain;
     }
 
-    /* DROITE : Les Infos */
     .lecture-info {
-        flex: 3; /* 30% de largeur */
-        height: 100%; 
-        border-radius: 0;
-        border: none;
-        border-left: 1px solid var(--border);
-        overflow-y: auto; /* Scroll uniquement dans cette zone */
-        padding: 30px;
-        min-width: 350px;
-        background: var(--card-bg); /* S'assure que le fond est uni */
+        flex: 3; height: 100%; border-radius: 0; border: none; border-left: 1px solid var(--border);
+        overflow-y: auto; padding: 30px; min-width: 350px;
     }
 }
