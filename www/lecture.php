@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id']) || !isset($_GET['id'])) {
 $cours_id = intval($_GET['id']);
 $user_id = $_SESSION['user_id'];
 
-// Vérification accès
+// Vérification stricte des droits
 $sql = "
     SELECT c.*, u.nom as auteur_nom, u.prenom as auteur_prenom 
     FROM cours c
@@ -31,10 +31,11 @@ if (!$cours) die("Accès refusé.");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($cours['titre']) ?></title>
-    <link rel="stylesheet" href="style.css?v=<?= time() ?>"> 
+    <link rel="stylesheet" href="style.css?v=<?= time() ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="lecture-page"> <header>
+<body class="lecture-page">
+    <header>
         <a href="index.php" class="logo"><i class="fas fa-arrow-left"></i> Retour</a>
         <div class="nav-links">
             <button id="theme-toggle" class="btn-toggle-theme"><i class="fas fa-sun"></i></button>
@@ -49,7 +50,11 @@ if (!$cours) die("Accès refusé.");
                     <source src="stream.php?id=<?= $cours['id'] ?>" type="video/mp4">
                 </video>
             <?php elseif ($cours['type_contenu'] == 'pdf'): ?>
-                <iframe src="stream.php?id=<?= $cours['id'] ?>#toolbar=0&view=FitH" class="pdf-viewer"></iframe>
+                <iframe 
+                    data-src="stream.php?id=<?= $cours['id'] ?>#toolbar=0" 
+                    class="pdf-viewer" 
+                    id="pdfFrame">
+                </iframe>
             <?php endif; ?>
         </div>
 
@@ -71,5 +76,20 @@ if (!$cours) die("Accès refusé.");
 
     </div>
     <script src="script.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var iframe = document.getElementById("pdfFrame");
+            if (iframe) {
+                var baseUrl = iframe.getAttribute("data-src");
+                // Si l'écran est large (PC > 1024px) -> On adapte à la HAUTEUR (FitV)
+                // Si l'écran est petit (Mobile) -> On adapte à la LARGEUR (FitH)
+                var zoomMode = (window.innerWidth >= 1024) ? "&view=FitV" : "&view=FitH";
+                
+                // On lance le chargement avec le bon paramètre
+                iframe.src = baseUrl + zoomMode;
+            }
+        });
+    </script>
 </body>
 </html>
