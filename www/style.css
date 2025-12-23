@@ -165,3 +165,67 @@ input, select, textarea {
     .btn-admin { font-size: 0.8rem; }
     h1 { font-size: 1.5rem; text-align: center; }
 }
+
+/* --- LECTEUR (lecture.php) RESPONSIVE --- */
+.lecture-container {
+    max-width: 900px; /* Largeur max idéale pour la lecture */
+    margin: 0 auto;
+    width: 100%;
+}
+
+.player-wrapper {
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    /* Permet de centrer le contenu */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Pour la VIDÉO : Responsive tout en gardant les proportions */
+video {
+    width: 100%;
+    height: auto;
+    max-height: 80vh; /* Ne pas dépasser 80% de la hauteur de l'écran */
+    display: block;
+}
+
+/* Pour le PDF : Doit être assez haut sur mobile */
+iframe.pdf-viewer {
+    width: 100%;
+    height: 80vh; /* Prend 80% de la hauteur de l'écran du téléphone */
+    border: none;
+    display: block;
+}
+
+/* Description sous le lecteur */
+.lecture-info {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+}
+
+.lecture-title {
+    color: var(--accent);
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+.lecture-meta {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 15px;
+}
+
+/* Sur très petits écrans (mobiles anciens) */
+@media (max-width: 480px) {
+    .lecture-info { padding: 15px; }
+    .lecture-title { font-size: 1.3rem; }
+    iframe.pdf-viewer { height: 70vh; }
+}
