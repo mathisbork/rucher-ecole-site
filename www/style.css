@@ -132,60 +132,63 @@ iframe.pdf-viewer, video { width: 100%; height: 60vh; border: none; display: blo
 /* --- CONFIGURATION ORDI (Écrans > 1024px) --- */
 @media (min-width: 1024px) {
     
-    /* On fige le scroll général du site, c'est les blocs qui scrollent */
+    /* 1. BODY ET HEADER */
     body.lecture-page {
+        height: 100vh !important; 
         overflow: hidden !important; 
+        display: flex !important;
+        flex-direction: column !important;
     }
 
+    header {
+        flex: 0 0 auto !important; /* Garde sa taille naturelle */
+    }
+
+    /* 2. LE CONTENEUR PRINCIPAL */
     .container-lecture {
-        /* Hauteur fixe (Taille de l'écran - Header) */
-        height: calc(100% - 65px) !important; 
+        flex: 1 !important; /* Remplit tout l'espace sous le header */
+        height: 100% !important; /* Force la hauteur */
         margin: 0 !important;
         padding: 0 !important;
-        
         display: flex !important;
-        flex-direction: row !important; /* Ligne standard (Info gauche, PDF droite) */
-        align-items: flex-start !important;
+        flex-direction: row !important; /* Cote a cote */
+        overflow: hidden !important;
     }
 
-    /* --- BLOC INFO (GAUCHE) --- */
+    /* 3. LA SIDEBAR (Gauche) */
     .lecture-info {
-        flex: 2 !important; /* Prend 20-25% de la place */
-        width: 100% !important;
-        min-width: 100% !important;
-        max-width: 100% !important;
-        
-        height: 100% !important; /* Toute la hauteur */
-        overflow-y: auto !important; /* Scrollable si trop de texte */
-        
+        width: 350px !important;
+        min-width: 350px !important;
+        height: 100% !important;
+        overflow-y: auto !important;
         border-right: 1px solid var(--border) !important;
-        border-radius: 0 !important;
         padding: 25px !important;
         box-sizing: border-box !important;
+        background: var(--card-bg) !important;
+        z-index: 10;
     }
 
-    /* --- BLOC LECTEUR (DROITE) --- */
+    /* 4. LE LECTEUR (Droite) */
     .player-wrapper {
-        flex: 8 !important; /* Prend le reste (75-80%) */
-        height: 100% !important; /* Toute la hauteur */
-        background: #000 !important; /* Fond noir si jamais y'a un trou */
-        border-radius: 0 !important;
-        display: block !important;
-        position: relative !important;
+        flex: 1 !important; /* Prend TOUT le reste de la largeur */
+        height: 100% !important;
+        background: #000 !important;
+        
+        /* ICI LA CORRECTION : On utilise Flexbox pour étirer le PDF */
+        display: flex !important;
+        flex-direction: column !important;
+        position: static !important; /* On annule le relative */
     }
 
-    /* LE PDF LUI-MÊME */
-    iframe.pdf-viewer {
-        width: 100% !important;
-        height: 100% !important; /* Remplit tout le bloc de droite */
+    /* 5. LE PDF / VIDEO */
+    iframe.pdf-viewer, video {
+        /* On annule le position absolute qui faisait disparaitre le contenu */
+        position: static !important; 
+        
+        flex: 1 !important;   /* Grandit pour remplir la hauteur */
+        width: 100% !important; /* Grandit pour remplir la largeur */
+        height: 100% !important;
         border: none !important;
         display: block !important;
-    }
-
-    /* VIDEO */
-    video {
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: contain !important; /* Garde le ratio vidéo */
     }
 }
