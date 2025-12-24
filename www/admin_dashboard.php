@@ -60,8 +60,9 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] != 1) {
                 </div>
                 <div class="card-body">
                     <h3>Élèves</h3>
-                    <p class="card-desc">Liste des inscrits, modification des mots de passe.</p>
-                    <a href="#" class="btn-main" style="background:var(--text-muted); cursor:not-allowed;">Bientôt disponible</a>
+                    <p class="card-desc">Liste des inscrits, modification des profils et réinitialisation de mots de passe.</p>
+                    
+                    <a href="admin_users.php" class="btn-main">Gérer les élèves</a>
                 </div>
             </div>
 
