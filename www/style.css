@@ -193,97 +193,102 @@ iframe.pdf-viewer, video { width: 100%; height: 60vh; border: none; display: blo
     }
 }
 
+/* =========================================
+   5. PAGES D'AUTHENTIFICATION (Login / Register)
+   ========================================= */
+
+/* Le fond de la page : Centrage total + Dégradé sombre */
 body.auth-page {
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, var(--bg) 0%, #000000 100%); /* Petit dégradé stylé */
+    background: radial-gradient(circle at center, #2c3e50 0%, #000000 100%);
     padding: 20px;
     box-sizing: border-box;
+    margin: 0;
 }
 
-/* La boîte blanche/grise */
+/* La Carte (Boîte) */
 .auth-container {
     background: var(--card-bg);
     width: 100%;
-    max-width: 450px; /* Taille idéale sur PC */
+    max-width: 420px; /* Largeur idéale sur PC */
     padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Ombre portée profonde */
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6); /* Belle ombre profonde */
     border: 1px solid var(--border);
     text-align: center;
-    animation: fadeIn 0.5s ease-out; /* Petite animation d'arrivée */
+    
+    /* Petite animation d'arrivée */
+    animation: slideUp 0.5s ease-out;
 }
 
-/* Le Titre */
+/* Titres et Textes */
 .auth-container h2 {
     margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 2rem;
     color: var(--accent);
+    font-size: 2rem;
+    margin-bottom: 5px;
 }
 
 .auth-subtitle {
     color: var(--text-muted);
+    font-size: 0.95rem;
     margin-bottom: 30px;
-    font-size: 1rem;
 }
 
-/* Les Champs */
+/* Les Champs (Inputs) */
 .auth-container input {
     width: 100%;
-    padding: 15px; /* Plus gros pour être lisible */
-    margin-bottom: 20px;
-    border-radius: 8px;
+    padding: 15px; /* Plus d'espace pour écrire */
+    margin-bottom: 15px;
     background: var(--bg);
     border: 1px solid var(--border);
+    border-radius: 8px;
     color: var(--text);
     font-size: 1rem;
-    transition: border-color 0.3s;
+    transition: all 0.3s;
 }
 
 .auth-container input:focus {
     border-color: var(--accent);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2);
+    box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2); /* Halo orange */
 }
 
-/* Le Bouton */
+/* Les Boutons */
 .auth-container .btn-main {
     width: 100%;
     padding: 15px;
     font-size: 1.1rem;
+    font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
+    border-radius: 8px;
     margin-top: 10px;
+    cursor: pointer;
+    transition: transform 0.2s;
 }
 
-/* Le lien en bas */
+.auth-container .btn-main:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+/* Lien bas de page */
 .auth-link {
     display: block;
     margin-top: 25px;
     color: var(--text-muted);
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
 }
-.auth-link:hover {
-    color: var(--accent);
-    text-decoration: underline;
-}
+.auth-link strong { color: var(--accent); }
+.auth-link:hover { text-decoration: underline; }
 
-/* Animation d'entrée */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
+/* Animation */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
-}
-
-/* MOBILE : On prend tout l'écran */
-@media (max-width: 480px) {
-    .auth-container {
-        padding: 30px 20px;
-        box-shadow: none;
-        border: none;
-        background: transparent;
-    }
 }
